@@ -1,19 +1,24 @@
 import LoadingSpinner from '@/components/loading-spinner';
 import PlanetCard from '@/components/planet-card';
 import { Planet } from '@/models/entities/planet';
-import { showNotificacion } from '@/redux/slices/notifications';
+import { showNotification } from '@/redux/slices/notifications';
 import { useGetPlanetsQuery } from '@/redux/slices/planets';
 import { Typography } from '@material-tailwind/react';
 import { useRouter } from 'next/router';
-import { Key, useCallback } from 'react';
+import { Key, useCallback, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 export default function Planets() {
   const { data, isLoading, error } = useGetPlanetsQuery();
   const router = useRouter();
+  const dispatch = useDispatch();
 
-  if (error) {
-    showNotificacion({ message: 'Planets list not found', type: 'error' });
-  }
+  // Shows API error if exists
+  useEffect(() => {
+    if (error && 'data' in error) {
+      dispatch(showNotification({ message: error.data.message, type: 'error' }));
+    }
+  }, [error, dispatch]);
 
   const planetClicked = useCallback(
     (planetId: string) => {

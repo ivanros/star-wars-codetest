@@ -1,23 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {};
+const initialState = {
+  type: 'error',
+  message: '',
+  show: false,
+};
 
-export const notificacionesSlice = createSlice({
-  name: 'notificaciones',
+export const notificationSlice = createSlice({
+  name: 'notification',
   initialState,
   reducers: {
-    showNotificacion(state, action) {
+    showNotification(state, action) {
       const { type, message } = action.payload;
-      state = { type, message, show: true };
+      return { type, message, show: true };
     },
-    closeNotificacion(state, action) {
+    closeNotification(state, action) {
       const { type, message } = action.payload;
-      state = { type, message, show: false };
+      return { type, message, show: false };
     },
-    clearNotificacion(state) {
-      state = initialState;
+    clearNotification(state) {
+      return initialState;
     },
   },
 });
 
-export const { showNotificacion, closeNotificacion } = notificacionesSlice.actions;
+export const { showNotification, closeNotification, clearNotification } = notificationSlice.actions;

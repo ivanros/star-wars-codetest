@@ -1,6 +1,6 @@
-import React from 'react';
 import { MobileNav, Navbar as MTNavbar, Typography } from '@material-tailwind/react';
 import Link from 'next/link';
+import React from 'react';
 
 interface NavbarProps {
   brandName?: string;
@@ -16,7 +16,7 @@ export function Navbar(props: NavbarProps) {
   }, []);
 
   const navList = (
-    <ul className="mb-4 mt-2 flex flex-col gap-2 text-inherit lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+    <ul className="flex flex-col gap-2 text-inherit lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       {routes.map(({ name, path }) => (
         <Typography key={name} as="li" variant="small" color="inherit" className="capitalize">
           <Link
@@ -33,7 +33,7 @@ export function Navbar(props: NavbarProps) {
   );
 
   return (
-    <MTNavbar color="transparent" className="absolute p-3 z-10">
+    <MTNavbar color="transparent" className="absolute py-3 px-20 z-10">
       <div className="container mx-auto flex items-center justify-between text-white">
         <Link href="/">
           <Typography className="mr-4 ml-2 cursor-pointer py-1.5 font-bold">{brandName}</Typography>

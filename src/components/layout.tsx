@@ -1,14 +1,14 @@
-import React, { PropsWithChildren } from 'react';
-import Navbar from './navbar';
-import Footer from './footer';
 import { routes } from '@/data';
+import { PropsWithChildren } from 'react';
+import Footer from './footer';
+import Navbar from './navbar';
 
 const Layout = ({ children }: PropsWithChildren) => {
   return (
     <>
       <Navbar routes={routes} />
-      <div className="h-full w-full antialiased bg-gradient-to-tl from-space via-galaxy to-space">
-        <div className="relative min-h-screen w-full">{children}</div>
+      <div className="min-h-screen h-max w-full antialiased bg-gradient-to-tl from-space via-galaxy to-space">
+        <div className="py-20 px-20">{children}</div>
       </div>
       <Footer />
     </>
