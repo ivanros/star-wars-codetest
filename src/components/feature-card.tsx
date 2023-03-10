@@ -38,8 +38,4 @@ export function FeatureCard(props: FeatureCardProps) {
   );
 }
 
-FeatureCard.defaultProps = {
-  color: 'blue',
-};
-
 export default FeatureCard;
