@@ -12,7 +12,10 @@ export const planetsApi = createApi({
     getPlanets: builder.query<Planet[], void>({
       query: () => '/planets',
     }),
+    getPlanetById: builder.query<Planet, string | undefined>({
+      query: (planetId) => `/planets/${planetId}`,
+    }),
   }),
 });
 
-export const { useGetPlanetsQuery } = planetsApi;
+export const { useGetPlanetsQuery, useGetPlanetByIdQuery } = planetsApi;

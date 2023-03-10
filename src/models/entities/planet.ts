@@ -7,6 +7,7 @@ export type Planet = {
   climates: String[];
   terrains: String[];
   residentConnection: ResidentConnection;
+  image?: string;
   created?: Date;
   population?: Number;
   orbitalPeriod?: Number;

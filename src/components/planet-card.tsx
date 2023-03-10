@@ -1,32 +1,24 @@
-import { MouseEventHandler, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Avatar, Button, Card, Typography } from '@material-tailwind/react';
 import { MagnifyingGlassIcon, SunIcon, GlobeAltIcon } from '@heroicons/react/24/solid';
 import { Planet } from '@/models/entities/planet';
+import { getRandomPlanetImage } from '@/utils/image-utils';
 
 interface PlanetCardProps {
   data: Planet;
-  onClick: MouseEventHandler<HTMLDivElement>;
+  onClick: Function;
 }
-
-const TOTAL_PLANET_IMAGES = 5;
 
 export function PlanetCard(props: PlanetCardProps) {
   const { data, onClick } = props;
-  const { id, name, diameter, climates, terrains, residentConnection } = data;
+  const { id, name, diameter, climates, terrains, residentConnection, image } = data;
 
   const [isCardHover, setIsCardHover] = useState(false);
-  const [planetImage, setPlanetImage] = useState('');
-
-  // Changes planet image based on planet name's length and the total planet images in /public folder
-  useEffect(() => {
-    const index = (data.name.length % TOTAL_PLANET_IMAGES) + 1;
-    setPlanetImage(`/planet_${index}.png`);
-  }, [data.name]);
 
   return (
     <Card
       className="relative flex w-full min-w-0 flex-col break-words rounded-3xl bg-white shadow-xl shadow-gray-500/5 hover:bg-indigo-100 hover:cursor-pointer"
-      onClick={onClick}
+      onClick={() => onClick(id)}
       onMouseEnter={() => setIsCardHover(true)}
       onMouseLeave={() => setIsCardHover(false)}
     >
@@ -34,19 +26,21 @@ export function PlanetCard(props: PlanetCardProps) {
         <div className="flex flex-wrap justify-center">
           <div className="flex w-full justify-center px-4 lg:order-2 lg:w-3/12">
             <div className="relative">
-              <div className="relative -mt-20 w-40">
-                <Avatar
-                  src={planetImage}
-                  alt="Planet picture"
-                  variant="circular"
-                  className={`h-full w-full ${isCardHover ? 'grayscale' : ''}`}
-                />
-                {isCardHover ? (
-                  <div className="absolute top-0 rounded-full h-full w-full flex justify-center items-center">
-                    <MagnifyingGlassIcon className="text-white -mt-3 w-12 h-12" />
-                  </div>
-                ) : null}
-              </div>
+              {image ? (
+                <div className="relative -mt-20 w-40">
+                  <Avatar
+                    src={image}
+                    alt="Planet picture"
+                    variant="circular"
+                    className={`h-full w-full ${isCardHover ? 'grayscale' : ''}`}
+                  />
+                  {isCardHover ? (
+                    <div className="absolute top-0 rounded-full h-full w-full flex justify-center items-center">
+                      <MagnifyingGlassIcon className="text-white -mt-3 w-12 h-12" />
+                    </div>
+                  ) : null}
+                </div>
+              ) : null}
             </div>
           </div>
           <div className="mt-10 flex w-full justify-center px-4 lg:order-3 lg:mt-0 lg:w-4/12 lg:justify-end lg:self-center">
@@ -109,9 +103,5 @@ export function PlanetCard(props: PlanetCardProps) {
     </Card>
   );
 }
-
-PlanetCard.defaultProps = {
-  color: 'blue',
-};
 
 export default PlanetCard;
