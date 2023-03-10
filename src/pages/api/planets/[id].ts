@@ -46,7 +46,7 @@ export default async function handler(
       `,
       variables: { id },
     });
-    planet = response.data;
+    planet = response.data.planet;
   } catch (e) {
     // TODO: Capture error as Sentry trace when available
     console.error(e);
