@@ -17,17 +17,17 @@ export function Footer(props: FooterProps) {
       <div className="container flex align-middle mx-auto">
         <div className="flex w-full px-4 justify-between">
           <div className="gap-10">
-            <Typography variant="h4" color="blue-gray" aria-label="Footer title">
+            <Typography variant="h5" aria-label="Footer title">
               {title}
             </Typography>
-            <Typography className="font-light text-blue-gray-500" aria-label="Footer description">
+            <Typography variant="small" className="font-light" aria-label="Footer description">
               {description}
             </Typography>
           </div>
           <div className="flex self-center">
             <Typography
               variant="small"
-              className="font-light text-blue-gray-500 text-right"
+              className="font-light text-right"
               aria-label="Footer copyright"
             >
               {copyright}
@@ -48,7 +48,7 @@ Footer.defaultProps = {
       <a
         href="https://www.linkedin.com/in/ivanros"
         target="_blank"
-        className="text-blue-gray-500 transition-colors hover:text-blue-500"
+        className="text-indigo-300 transition-colors hover:text-indigo-600"
       >
         @ivanros92
       </a>

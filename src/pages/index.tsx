@@ -1,6 +1,7 @@
-import { Button, Typography } from '@material-tailwind/react';
 import FeatureCard from '@/components/feature-card';
 import { featuresData } from '@/data';
+import { Button, Typography } from '@material-tailwind/react';
+import { color } from '@material-tailwind/react/types/components/input';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -34,8 +35,14 @@ export default function Home() {
         </div>
         <div className="container mx-auto">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {featuresData.map(({ title, icon, description }) => (
-              <FeatureCard key={title} title={title} icon={icon} description={description} />
+            {featuresData.map(({ title, icon, color, description }) => (
+              <FeatureCard
+                key={title}
+                title={title}
+                color={color as color}
+                icon={icon}
+                description={description}
+              />
             ))}
           </div>
         </div>

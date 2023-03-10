@@ -3,12 +3,13 @@ import PlanetCard from '@/components/planet-card';
 import { Planet } from '@/models/entities/planet';
 import { showNotification } from '@/redux/slices/notifications';
 import { useGetPlanetsQuery } from '@/redux/slices/planets';
-import { Typography } from '@material-tailwind/react';
+import { Input, Option, Select, Typography } from '@material-tailwind/react';
 import { useRouter } from 'next/router';
-import { Key, useCallback, useEffect } from 'react';
+import { Key, useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 export default function Planets() {
+  const [orderBy, setOrderBy] = useState('name');
   const { data, isLoading, error } = useGetPlanetsQuery();
   const router = useRouter();
   const dispatch = useDispatch();
@@ -20,24 +21,51 @@ export default function Planets() {
     }
   }, [error, dispatch]);
 
-  const planetClicked = useCallback(
-    (planetId: string) => {
-      router.push({
-        pathname: '/planets/[planetId]',
-        query: { planetId },
-      });
-    },
-    [router],
-  );
+  const handleSearchFilter = useCallback((option: any) => {
+    console.log('handleSearchFilter', option);
+  }, []);
+
+  const handleOrderFilter = useCallback((option: any) => {
+    console.log('handleOrderFilter', option);
+  }, []);
 
   return (
-    <div className="flex justify-center py-32 h-full w-full">
+    <div className="flex flex-col justify-center py-30 px-40 h-full w-full">
       {!isLoading ? (
         <>
+          <div className="pb-36 inline-flex justify-center gap-20">
+            <div className="w-52">
+              <Input
+                label="Search..."
+                onChange={handleSearchFilter}
+                disabled={!data || !data.length}
+                className="px-4 text-gray-200"
+              />
+            </div>
+            <div className="w-52">
+              <Select
+                label="Order by"
+                disabled={!data || !data.length}
+                value={orderBy}
+                onChange={handleOrderFilter}
+                className="px-4 text-gray-200"
+              >
+                <Option value="name">Name</Option>
+                <Option value="diameter">Diameter</Option>
+                <Option value="climates">Climate</Option>
+                <Option value="terrains">Terrain</Option>
+                <Option value="population">Population</Option>
+              </Select>
+            </div>
+          </div>
           {data && data.length > 0 ? (
-            <div className="flex flex-col px-60 gap-28">
+            <div className="flex flex-col gap-28">
               {data.map((planet: Planet, index: Key) => (
-                <PlanetCard key={index} data={planet} onClick={planetClicked} />
+                <PlanetCard
+                  key={index}
+                  data={planet}
+                  onClick={(id: string) => router.push(`/planets/${id}`)}
+                />
               ))}
             </div>
           ) : (
@@ -50,9 +78,9 @@ export default function Planets() {
       ) : (
         <LoadingSpinner
           texts={[
-            'Buscando planetas en galaxias cercanas...',
-            'Preparando telescopios ultrasónicos...',
-            'Ajustando condensador de fluzo...',
+            'Searching for planets in nearby galaxies...',
+            'Preparing ultrasonic telescopes...',
+            'Adjusting fluzo capacitor...',
           ]}
         />
       )}

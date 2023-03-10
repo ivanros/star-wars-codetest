@@ -39,7 +39,7 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
             ) : null}
           </div>
           <div className="mt-10 flex w-full justify-center px-4 lg:order-3 lg:mt-0 lg:w-4/12 lg:justify-end lg:self-center">
-            <Button className="py-1 rounded-md text-white bg-indigo-500 shadow-gray-900 shadow-md drop-shadow-xl hover:scale-110 transition-all">
+            <Button className="py-2 rounded-md text-white bg-indigo-500 shadow-gray-900 shadow-md drop-shadow-xl hover:scale-110 transition-all">
               Edit planet
             </Button>
           </div>
@@ -131,14 +131,9 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
             </div>
           </div>
         </div>
-        <div className="overflow-x-auto sm:-mx-6 lg:-mx-8 mb-10">
+        <div className="overflow-x-auto sm:-mx-6 lg:-mx-8 mb-10 px-12">
           {residents && residents.length ? (
-            <>
-              <Typography variant="small" className="font-light text-blue-gray-500 text-sm mb-6">
-                This planet has {residents.length} residents
-              </Typography>
-              <ResidentsTable data={residents} />
-            </>
+            <ResidentsTable data={residents} />
           ) : (
             <Typography variant="small" className="font-light text-blue-gray-500 text-sm">
               This planet currently has no residents

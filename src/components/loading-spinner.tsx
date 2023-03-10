@@ -23,7 +23,7 @@ export function LoadingSpinner(props: LoadingSpinnerProps) {
   }, [texts, currentTextIndex]);
 
   return (
-    <div role="status" className="inline-flex gap-4">
+    <div role="status" className="inline-flex justify-center gap-4">
       <svg
         aria-hidden="true"
         className="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"

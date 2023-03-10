@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
-import { Avatar, Button, Card, Typography } from '@material-tailwind/react';
-import { MagnifyingGlassIcon, SunIcon, GlobeAltIcon } from '@heroicons/react/24/solid';
 import { Planet } from '@/models/entities/planet';
-import { getRandomPlanetImage } from '@/utils/image-utils';
+import { GlobeAltIcon, MagnifyingGlassIcon, SunIcon } from '@heroicons/react/24/solid';
+import { Avatar, Button, Card, Typography } from '@material-tailwind/react';
+import { useState } from 'react';
 
 interface PlanetCardProps {
   data: Planet;
@@ -44,7 +43,7 @@ export function PlanetCard(props: PlanetCardProps) {
             </div>
           </div>
           <div className="mt-10 flex w-full justify-center px-4 lg:order-3 lg:mt-0 lg:w-4/12 lg:justify-end lg:self-center">
-            <Button className="py-1 rounded-md text-white bg-indigo-500 shadow-gray-900 shadow-md drop-shadow-xl hover:scale-110 transition-all">
+            <Button className="py-2 rounded-md text-white bg-indigo-500 shadow-gray-900 shadow-md drop-shadow-xl hover:scale-110 transition-all">
               Edit planet
             </Button>
           </div>

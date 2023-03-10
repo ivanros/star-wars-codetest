@@ -1,3 +1,4 @@
 export type ErrorResponse = {
-  message: String;
+  data?: any;
+  message?: String;
 };

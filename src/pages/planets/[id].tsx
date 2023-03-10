@@ -1,26 +1,30 @@
 import LoadingSpinner from '@/components/loading-spinner';
 import PlanetCardDetail from '@/components/planet-card-detail';
-import { showNotificacion } from '@/redux/slices/notifications';
+import { showNotification } from '@/redux/slices/notifications';
 import { useGetPlanetByIdQuery } from '@/redux/slices/planets';
-import { ArrowLeftIcon } from '@heroicons/react/24/solid';
 import { Typography } from '@material-tailwind/react';
-import { useRouter } from 'next/router';
-import { useCallback } from 'react';
+import { BaseContext } from 'next/dist/shared/lib/utils';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
-export default function Planet() {
-  const router = useRouter();
-  const planetId = router.query.id?.toString();
+interface PlanetProps {
+  planetId: string;
+}
+
+export default function Planet(props: PlanetProps) {
+  const { planetId } = props;
   const { data, isLoading, error } = useGetPlanetByIdQuery(planetId);
+  const dispatch = useDispatch();
 
-  if (error) {
-    showNotificacion({ message: 'Planets list not found', type: 'error' });
-  }
+  // Shows API error if exists
+  useEffect(() => {
+    if (error && 'data' in error) {
+      dispatch(showNotification({ message: error.data.message, type: 'error' }));
+    }
+  }, [error, dispatch]);
 
   return (
-    <div className="flex justify-center items-center min-h-screen w-full px-24">
-      <div className="absolute top-10">
-        <ArrowLeftIcon className=" text-indigo-500 hover:text-indigo-200 cursor-pointer" />
-      </div>
+    <div className="flex justify-center py-40 px-40 h-full w-full">
       {!isLoading ? (
         <>
           {data ? (
@@ -35,12 +39,19 @@ export default function Planet() {
       ) : (
         <LoadingSpinner
           texts={[
-            'Buscando planetas en galaxias cercanas...',
-            'Preparando telescopios ultrasónicos...',
-            'Ajustando condensador de fluzo...',
+            'Looking for information about the planet...',
+            'Calculating approximate dimensions...',
+            'Gossiping about people social networks...',
           ]}
         />
       )}
     </div>
   );
+}
+
+// Ensure that we retrieve a non-undefined planet id from params
+export function getServerSideProps(context: BaseContext) {
+  return {
+    props: { planetId: context.params.id },
+  };
 }

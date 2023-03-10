@@ -34,9 +34,7 @@ export function Notification() {
           }
           className={type === 'error' ? 'bg-red-500' : 'bg-green-600'}
         >
-          <Typography variant="medium" className="ml-10">
-            {message}
-          </Typography>
+          <Typography className="ml-10">{message}</Typography>
         </Alert>
       </div>
     </div>
