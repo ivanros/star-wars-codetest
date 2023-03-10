@@ -17,6 +17,7 @@
     "typescript": "4.9.5"
   },
   "devDependencies": {
+    "@heroicons/react": "2.0.16",
     "@material-tailwind/react": "1.4.2",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "14.0.0",
