@@ -57,13 +57,13 @@ export function PlanetCard(props: PlanetCardProps) {
           <div className="mt-10 flex w-full justify-center px-4 lg:order-3 lg:mt-0 lg:w-4/12 lg:justify-end lg:self-center gap-3">
             {typeof onDelete !== 'undefined' ? (
               <Button
+                variant="outlined"
+                className="flex items-center rounded-md bg-galaxy shadow-gray-900 shadow-md drop-shadow-xl hover:scale-110 hover:bg-red-700 hover:opacity-1 transition-all"
                 onClick={(e) => handlePlanetDelete(e, id)}
-                className="flex items-center gap-3 rounded-md bg-red-700 shadow-gray-900 shadow-md drop-shadow-xl hover:scale-110 transition-all"
               >
                 {createElement(TrashIcon, {
                   className: 'm-auto w-6 h-6 text-white',
                 })}
-                <Typography className="text-white font-bold text-sm">Remove</Typography>
               </Button>
             ) : null}
           </div>

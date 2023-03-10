@@ -3,9 +3,10 @@ import PlanetCard from '@/components/planet-card';
 import { Planet } from '@/models/entities/planet';
 import { showNotification } from '@/redux/slices/notifications';
 import { useGetPlanetsQuery } from '@/redux/slices/planets';
-import { Typography } from '@material-tailwind/react';
+import { PlusIcon } from '@heroicons/react/24/solid';
+import { Button, Typography } from '@material-tailwind/react';
 import { useRouter } from 'next/router';
-import { Key, useCallback, useEffect, useState } from 'react';
+import { createElement, Key, useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 export default function Planets() {
@@ -23,6 +24,8 @@ export default function Planets() {
     [planets, dispatch],
   );
 
+  const addPlanetToList = useCallback(() => {}, []);
+
   // Shows API error if exists
   useEffect(() => {
     if (error && 'data' in error) {
@@ -39,6 +42,18 @@ export default function Planets() {
 
   return (
     <div className="flex flex-col justify-center py-40 px-40 h-full w-full">
+      <div className="flex justify-end mb-10">
+        <Button
+          variant="outlined"
+          className="flex items-center gap-3 rounded-md shadow-gray-900 shadow-md drop-shadow-xl hover:scale-110 hover:bg-green-600 hover:opacity-1 transition-all"
+          onClick={addPlanetToList}
+        >
+          {createElement(PlusIcon, {
+            className: 'm-auto w-6 h-6 text-white',
+          })}
+          <Typography className="text-white font-bold text-sm">New Planet</Typography>
+        </Button>
+      </div>
       {!isLoading ? (
         <>
           {planets.length > 0 ? (

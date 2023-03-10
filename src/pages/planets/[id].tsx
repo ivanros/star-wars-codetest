@@ -4,7 +4,7 @@ import { showNotification } from '@/redux/slices/notifications';
 import { useGetPlanetByIdQuery } from '@/redux/slices/planets';
 import { Typography } from '@material-tailwind/react';
 import { BaseContext } from 'next/dist/shared/lib/utils';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 interface PlanetProps {
@@ -15,6 +15,8 @@ export default function Planet(props: PlanetProps) {
   const { planetId } = props;
   const { data, isLoading, error } = useGetPlanetByIdQuery(planetId);
   const dispatch = useDispatch();
+
+  const savePlanetChanges = useCallback((key: String, value: String) => {}, []);
 
   // Shows API error if exists
   useEffect(() => {
@@ -28,7 +30,7 @@ export default function Planet(props: PlanetProps) {
       {!isLoading ? (
         <>
           {data ? (
-            <PlanetCardDetail data={data} />
+            <PlanetCardDetail data={data} onEdit={savePlanetChanges} />
           ) : (
             <Typography variant="lead" color="white" className="opacity-80 px-[20%]">
               We could not find the requested planet, maybe we just need to change some galaxy

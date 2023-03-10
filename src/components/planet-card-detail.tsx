@@ -1,13 +1,18 @@
 import { Planet } from '@/models/entities/planet';
-import { Avatar, Button, Card, Typography } from '@material-tailwind/react';
+import { EyeIcon } from '@heroicons/react/24/outline';
+import { PencilIcon } from '@heroicons/react/24/solid';
+import { Avatar, Button, Card, Input, Typography } from '@material-tailwind/react';
+import { createElement, useEffect, useState } from 'react';
 import ResidentsTable from './residents-table';
 
 interface PlanetCardDetailProps {
+  mode: String;
   data: Planet;
+  onEdit: Function;
 }
 
 export function PlanetCardDetail(props: PlanetCardDetailProps) {
-  const { data } = props;
+  const { mode, data, onEdit } = props;
   const {
     id,
     name,
@@ -21,6 +26,11 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
     orbitalPeriod,
     rotationPeriod,
   } = data;
+  const [currentMode, setCurrentMode] = useState<String>();
+
+  useEffect(() => {
+    setCurrentMode(mode);
+  }, [mode]);
 
   return (
     <Card className="relative flex w-full min-w-0 flex-col break-words rounded-3xl bg-white shadow-xl shadow-gray-500/5">
@@ -39,8 +49,17 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
             ) : null}
           </div>
           <div className="mt-10 flex w-full justify-center px-4 lg:order-3 lg:mt-0 lg:w-4/12 lg:justify-end lg:self-center">
-            <Button className="py-2 rounded-md text-white bg-indigo-500 shadow-gray-900 shadow-md drop-shadow-xl hover:scale-110 transition-all">
-              Edit planet
+            <Button
+              variant="outlined"
+              className="flex items-center gap-3 rounded-md bg-galaxy shadow-gray-900 shadow-md drop-shadow-xl hover:scale-110 hover:bg-teal-600 hover:opacity-1 transition-all"
+              onClick={() => setCurrentMode(currentMode === 'view' ? 'edit' : 'view')}
+            >
+              {createElement(currentMode === 'view' ? PencilIcon : EyeIcon, {
+                className: 'm-auto w-6 h-6 text-white',
+              })}
+              <Typography className="text-white font-bold text-sm">
+                {currentMode === 'view' ? 'Edit Planet' : 'View Mode'}
+              </Typography>
             </Button>
           </div>
           <div className="w-full px-4 lg:w-4/12 flex items-center">
@@ -59,9 +78,15 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
               <Typography variant="small" className="font-light text-blue-gray-500 text-sm">
                 ID
               </Typography>
-              <Typography variant="lead" className="font-bold text-md truncate">
-                {id}
-              </Typography>
+              {currentMode === 'view' ? (
+                <Typography variant="lead" className="font-bold text-md truncate">
+                  {id}
+                </Typography>
+              ) : (
+                <div className="w-40">
+                  <Input value={id.toString()} onBlur={() => onEdit('id', id)} />
+                </div>
+              )}
             </div>
             <div className="p-3 flex flex-col text-center align-middle min-w-0 w-60">
               <Typography variant="small" className="font-light text-blue-gray-500 text-sm">
@@ -110,7 +135,7 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
                 Population
               </Typography>
               <Typography variant="lead" className="font-bold text-md truncate">
-                {population}
+                {population || 0}
               </Typography>
             </div>
             <div className="p-3 flex flex-col text-center align-middle min-w-0 w-60">
@@ -132,17 +157,15 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
           </div>
         </div>
         <div className="overflow-x-auto sm:-mx-6 lg:-mx-8 mb-10 px-12">
-          {residents && residents.length ? (
-            <ResidentsTable data={residents} />
-          ) : (
-            <Typography variant="small" className="font-light text-blue-gray-500 text-sm">
-              This planet currently has no residents
-            </Typography>
-          )}
+          {residents && residents.length ? <ResidentsTable data={residents} /> : null}
         </div>
       </div>
     </Card>
   );
 }
+
+PlanetCardDetail.defaultProps = {
+  mode: 'view',
+};
 
 export default PlanetCardDetail;
