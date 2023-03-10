@@ -4,6 +4,7 @@ import { gql } from '@apollo/client';
 import { Planet } from '@/models/entities/planet';
 import { ErrorResponse } from '@/models/internals/error-response';
 import { API_ERRORS } from '@/constants/errors.constants';
+import { getRandomPlanetImage } from '@/utils/image-utils';
 
 export default async function handler(
   req: NextApiRequest,
@@ -31,7 +32,11 @@ export default async function handler(
         }
       `,
     });
-    planets = response.data.allPlanets.planets;
+    // Before returning the data we ensure to push a random image per each planet
+    planets = response.data.allPlanets.planets.map((planet: Planet) => {
+      const image = getRandomPlanetImage(planet.name);
+      return { ...planet, image };
+    });
   } catch (e) {
     // TODO: Capture error as Sentry trace when available
     console.error(e);
