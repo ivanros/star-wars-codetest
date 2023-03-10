@@ -2,26 +2,26 @@ import LoadingSpinner from '@/components/loading-spinner';
 import PlanetCard from '@/components/planet-card';
 import { Planet } from '@/models/entities/planet';
 import { showNotification } from '@/redux/slices/notifications';
-import { useGetPlanetsQuery } from '@/redux/slices/planets';
+import { deletePlanet, useGetPlanetsQuery } from '@/redux/slices/planets';
+import { store } from '@/redux/store';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import { Button, Typography } from '@material-tailwind/react';
 import { useRouter } from 'next/router';
-import { createElement, Key, useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { createElement, Key, useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-export default function Planets() {
-  const { data, isLoading, error } = useGetPlanetsQuery();
-  const [planets, setPlanets] = useState<Planet[]>([]);
+export default function PlanetsPage() {
+  const { isLoading, error } = useGetPlanetsQuery();
+  const planets = useSelector((state: ReturnType<typeof store.getState>) => state.planets.data);
   const router = useRouter();
   const dispatch = useDispatch();
 
   const removePlanetFromList = useCallback(
     (id: string) => {
-      const filteredPlanets = planets.filter((planet: Planet) => planet.id !== id);
-      setPlanets(filteredPlanets);
+      dispatch(deletePlanet(id));
       dispatch(showNotification({ message: `Planet "${id}" deleted from space`, type: 'success' }));
     },
-    [planets, dispatch],
+    [dispatch],
   );
 
   const addPlanetToList = useCallback(() => {}, []);
@@ -32,13 +32,6 @@ export default function Planets() {
       dispatch(showNotification({ message: error.data.message, type: 'error' }));
     }
   }, [error, dispatch]);
-
-  // Copy of API planets so we can handle our own array operations
-  useEffect(() => {
-    if (data && data.length > 0) {
-      setPlanets(data);
-    }
-  }, [data]);
 
   return (
     <div className="flex flex-col justify-center py-40 px-40 h-full w-full">

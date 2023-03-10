@@ -66,9 +66,19 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
             <Typography variant="small" className="font-light text-blue-gray-500 text-md mr-10">
               Name
             </Typography>
-            <Typography variant="h2" className="text-space font-bold text-2xl">
-              {name}
-            </Typography>
+            {currentMode === 'view' ? (
+              <Typography variant="lead" className="font-bold text-md truncate">
+                {name || ''}
+              </Typography>
+            ) : (
+              <div className="w-40">
+                <Input
+                  variant="standard"
+                  defaultValue={name.toString()}
+                  onBlur={(e) => onEdit('name', e.target.value)}
+                />
+              </div>
+            )}
           </div>
         </div>
 
@@ -78,23 +88,28 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
               <Typography variant="small" className="font-light text-blue-gray-500 text-sm">
                 ID
               </Typography>
-              {currentMode === 'view' ? (
-                <Typography variant="lead" className="font-bold text-md truncate">
-                  {id}
-                </Typography>
-              ) : (
-                <div className="w-40">
-                  <Input value={id.toString()} onBlur={() => onEdit('id', id)} />
-                </div>
-              )}
+              <Typography variant="lead" className="font-bold text-md truncate">
+                {id || ''}
+              </Typography>
             </div>
             <div className="p-3 flex flex-col text-center align-middle min-w-0 w-60">
               <Typography variant="small" className="font-light text-blue-gray-500 text-sm">
                 Diameter
               </Typography>
-              <Typography variant="lead" className="font-bold text-md truncate">
-                {diameter || 'unknown'}
-              </Typography>
+              {currentMode === 'view' ? (
+                <Typography variant="lead" className="font-bold text-md truncate">
+                  {diameter || 'unknown'}
+                </Typography>
+              ) : (
+                <div className="w-40">
+                  <Input
+                    type="number"
+                    variant="standard"
+                    defaultValue={diameter.toString()}
+                    onBlur={(e) => onEdit('diameter', +e.target.value)}
+                  />
+                </div>
+              )}
             </div>
             {residents ? (
               <div className="p-3 flex flex-col text-center align-middle min-w-0 w-60">
@@ -134,25 +149,58 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
               <Typography variant="small" className="font-light text-blue-gray-500 text-sm">
                 Population
               </Typography>
-              <Typography variant="lead" className="font-bold text-md truncate">
-                {population || 0}
-              </Typography>
+              {currentMode === 'view' ? (
+                <Typography variant="lead" className="font-bold text-md truncate">
+                  {population || 0}
+                </Typography>
+              ) : (
+                <div className="w-40">
+                  <Input
+                    type="number"
+                    variant="standard"
+                    defaultValue={(population || 0).toString()}
+                    onBlur={(e) => onEdit('population', +e.target.value)}
+                  />
+                </div>
+              )}
             </div>
             <div className="p-3 flex flex-col text-center align-middle min-w-0 w-60">
               <Typography variant="small" className="font-light text-blue-gray-500 text-sm">
                 Orbital period
               </Typography>
-              <Typography variant="lead" className="font-bold text-md truncate">
-                {orbitalPeriod}
-              </Typography>
+              {currentMode === 'view' ? (
+                <Typography variant="lead" className="font-bold text-md truncate">
+                  {orbitalPeriod || 0}
+                </Typography>
+              ) : (
+                <div className="w-40">
+                  <Input
+                    type="number"
+                    variant="standard"
+                    defaultValue={(orbitalPeriod || 0).toString()}
+                    onBlur={(e) => onEdit('orbitalPeriod', +e.target.value)}
+                  />
+                </div>
+              )}
             </div>
             <div className="p-3 flex flex-col text-center align-middle min-w-0 w-60">
               <Typography variant="small" className="font-light text-blue-gray-500 text-sm">
                 Rotation period
               </Typography>
-              <Typography variant="lead" className="font-bold text-md truncate">
-                {rotationPeriod}
-              </Typography>
+              {currentMode === 'view' ? (
+                <Typography variant="lead" className="font-bold text-md truncate">
+                  {rotationPeriod || 0}
+                </Typography>
+              ) : (
+                <div className="w-40">
+                  <Input
+                    type="number"
+                    variant="standard"
+                    defaultValue={(rotationPeriod || 0).toString()}
+                    onBlur={(e) => onEdit('rotationPeriod', +e.target.value)}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>

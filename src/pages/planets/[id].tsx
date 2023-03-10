@@ -1,36 +1,61 @@
 import LoadingSpinner from '@/components/loading-spinner';
 import PlanetCardDetail from '@/components/planet-card-detail';
+import { Planet } from '@/models/entities/planet';
 import { showNotification } from '@/redux/slices/notifications';
-import { useGetPlanetByIdQuery } from '@/redux/slices/planets';
+import { editPlanetProperty, planetsApi } from '@/redux/slices/planets';
+import { store } from '@/redux/store';
 import { Typography } from '@material-tailwind/react';
 import { BaseContext } from 'next/dist/shared/lib/utils';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 interface PlanetProps {
   planetId: string;
 }
 
-export default function Planet(props: PlanetProps) {
+export default function PlanetPage(props: PlanetProps) {
   const { planetId } = props;
-  const { data, isLoading, error } = useGetPlanetByIdQuery(planetId);
+  const [planet, setPlanet] = useState();
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const savePlanetChanges = useCallback((key: String, value: String) => {}, []);
+  const savePlanetChanges = useCallback(
+    async (key: String, value: any) => {
+      console.log('key', key, value);
+      await dispatch(editPlanetProperty({ id: planetId, key, value }));
+      const editedPlanet = store
+        .getState()
+        .planets.data.find((planet: Planet) => planet.id === planetId);
+      console.log(editedPlanet);
+      setPlanet(editedPlanet);
+    },
+    [planetId, dispatch],
+  );
 
-  // Shows API error if exists
   useEffect(() => {
-    if (error && 'data' in error) {
-      dispatch(showNotification({ message: error.data.message, type: 'error' }));
+    // Retrieves planet data by the id provided via query param
+    async function getPlanetById(id: string) {
+      setIsLoading(true);
+      const { data, error } = await dispatch(
+        planetsApi.endpoints.getPlanetById.initiate(id) as any,
+      );
+      if (data) {
+        setPlanet(data);
+      } else if (error && 'data' in error) {
+        dispatch(showNotification({ message: error.data.message, type: 'error' }));
+      }
+      setIsLoading(false);
     }
-  }, [error, dispatch]);
+
+    getPlanetById(planetId);
+  }, [planetId, dispatch]);
 
   return (
     <div className="flex justify-center py-40 px-40 h-full w-full">
       {!isLoading ? (
         <>
-          {data ? (
-            <PlanetCardDetail data={data} onEdit={savePlanetChanges} />
+          {planet ? (
+            <PlanetCardDetail data={planet} onEdit={savePlanetChanges} />
           ) : (
             <Typography variant="lead" color="white" className="opacity-80 px-[20%]">
               We could not find the requested planet, maybe we just need to change some galaxy
