@@ -1,10 +1,10 @@
-import { API_ERRORS } from '@/constants/errors.constants';
-import type { NextApiRequest, NextApiResponse } from 'next';
 import client from '@/apollo-client';
-import { gql } from '@apollo/client';
+import { API_ERRORS } from '@/constants/errors.constants';
 import { Planet } from '@/models/entities/planet';
 import { ErrorResponse } from '@/models/internals/error-response';
 import { getRandomPlanetImage } from '@/utils/image-utils';
+import { gql } from '@apollo/client';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
   req: NextApiRequest,
@@ -48,8 +48,10 @@ export default async function handler(
       variables: { id },
     });
     // Before returning the data we ensure to push a random planet image
+    // and UTC created date to provide standard dates
     const image = getRandomPlanetImage(response.data.planet.name);
-    planet = { ...response.data.planet, image };
+    const created = new Date(response.data.planet.created);
+    planet = { ...response.data.planet, created, image };
   } catch (e) {
     // TODO: Capture error as Sentry trace when available
     console.error(e);
