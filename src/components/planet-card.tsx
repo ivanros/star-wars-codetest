@@ -1,7 +1,7 @@
 import { Planet } from '@/models/entities/planet';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import { GlobeAltIcon, MagnifyingGlassIcon, SunIcon } from '@heroicons/react/24/solid';
-import { Avatar, Card, IconButton, Typography } from '@material-tailwind/react';
+import { Avatar, Button, Card, Typography } from '@material-tailwind/react';
 import { createElement, MouseEvent, useCallback, useState } from 'react';
 
 interface PlanetCardProps {
@@ -56,14 +56,15 @@ export function PlanetCard(props: PlanetCardProps) {
           </div>
           <div className="mt-10 flex w-full justify-center px-4 lg:order-3 lg:mt-0 lg:w-4/12 lg:justify-end lg:self-center gap-3">
             {typeof onDelete !== 'undefined' ? (
-              <IconButton
+              <Button
                 onClick={(e) => handlePlanetDelete(e, id)}
-                className="py-2 rounded-md bg-red-700 shadow-gray-900 shadow-md drop-shadow-xl hover:scale-110 transition-all"
+                className="flex items-center gap-3 rounded-md bg-red-700 shadow-gray-900 shadow-md drop-shadow-xl hover:scale-110 transition-all"
               >
                 {createElement(TrashIcon, {
                   className: 'm-auto w-6 h-6 text-white',
                 })}
-              </IconButton>
+                <Typography className="text-white font-bold text-sm">Remove</Typography>
+              </Button>
             ) : null}
           </div>
           <div className="w-full px-4 lg:order-1 lg:w-4/12">

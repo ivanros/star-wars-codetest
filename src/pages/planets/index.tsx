@@ -20,7 +20,7 @@ export default function Planets() {
       setPlanets(filteredPlanets);
       dispatch(showNotification({ message: `Planet "${id}" deleted from space`, type: 'success' }));
     },
-    [planets],
+    [planets, dispatch],
   );
 
   // Shows API error if exists
