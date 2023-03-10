@@ -1,6 +1,6 @@
-import { MouseEventHandler } from 'react';
+import { MouseEventHandler, useEffect, useState } from 'react';
 import { Avatar, Button, Card, Typography } from '@material-tailwind/react';
-import { SunIcon, GlobeAltIcon } from '@heroicons/react/24/solid';
+import { MagnifyingGlassIcon, SunIcon, GlobeAltIcon } from '@heroicons/react/24/solid';
 import { Planet } from '@/models/entities/planet';
 
 interface PlanetCardProps {
@@ -8,27 +8,44 @@ interface PlanetCardProps {
   onClick: MouseEventHandler<HTMLDivElement>;
 }
 
+const TOTAL_PLANET_IMAGES = 5;
+
 export function PlanetCard(props: PlanetCardProps) {
-  console.log(Math.random() * 4 + 1);
   const { data, onClick } = props;
   const { id, name, diameter, climates, terrains, residentConnection } = data;
+
+  const [isCardHover, setIsCardHover] = useState(false);
+  const [planetImage, setPlanetImage] = useState('');
+
+  // Changes planet image based on planet name's length and the total planet images in /public folder
+  useEffect(() => {
+    const index = (data.name.length % TOTAL_PLANET_IMAGES) + 1;
+    setPlanetImage(`/planet_${index}.png`);
+  }, [data.name]);
 
   return (
     <Card
       className="relative flex w-full min-w-0 flex-col break-words rounded-3xl bg-white shadow-xl shadow-gray-500/5 hover:bg-indigo-100 hover:cursor-pointer"
       onClick={onClick}
+      onMouseEnter={() => setIsCardHover(true)}
+      onMouseLeave={() => setIsCardHover(false)}
     >
       <div className="px-6">
         <div className="flex flex-wrap justify-center">
           <div className="flex w-full justify-center px-4 lg:order-2 lg:w-3/12">
             <div className="relative">
-              <div className="-mt-20 w-40">
+              <div className="relative -mt-20 w-40">
                 <Avatar
-                  src={`/planet_${Math.floor(Math.random() * 4 + 1)}.png`}
+                  src={planetImage}
                   alt="Planet picture"
                   variant="circular"
-                  className="h-full w-full"
+                  className={`h-full w-full ${isCardHover ? 'grayscale' : ''}`}
                 />
+                {isCardHover ? (
+                  <div className="absolute top-0 rounded-full h-full w-full flex justify-center items-center">
+                    <MagnifyingGlassIcon className="text-white -mt-3 w-12 h-12" />
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>
@@ -38,27 +55,27 @@ export function PlanetCard(props: PlanetCardProps) {
             </Button>
           </div>
           <div className="w-full px-4 lg:order-1 lg:w-4/12">
-            <div className="flex justify-center py-4 pt-8 lg:pt-4">
-              <div className="mr-4 p-3 flex flex-col text-center align-middle min-w-0">
-                <Typography variant="lead" className="font-bold text-sm truncate">
+            <div className="flex justify-center py-4 pt-8 lg:pt-4 gap-4">
+              <div className="p-3 flex flex-col text-center align-middle min-w-0 w-60">
+                <Typography variant="lead" className="font-bold text-md truncate">
                   {id}
                 </Typography>
                 <Typography variant="small" className="font-light text-blue-gray-500 text-sm">
                   ID
                 </Typography>
               </div>
-              <div className="mr-4 p-3 text-center">
-                <Typography variant="lead" className="font-bold uppercase">
-                  {diameter}
+              <div className="p-3 flex flex-col text-center align-middle min-w-0 w-60">
+                <Typography variant="lead" className="font-bold text-md truncate">
+                  {diameter || 'unknown'}
                 </Typography>
                 <Typography variant="small" className="font-light text-blue-gray-500 text-sm">
                   Diameter
                 </Typography>
               </div>
               {residentConnection ? (
-                <div className="p-3 text-center lg:mr-4">
-                  <Typography variant="lead" className="font-bold uppercase">
-                    {residentConnection.totalCount}
+                <div className="p-3 flex flex-col text-center align-middle min-w-0 w-60">
+                  <Typography variant="lead" className="font-bold text-md truncate">
+                    {residentConnection.totalCount || 0}
                   </Typography>
                   <Typography variant="small" className="font-light text-blue-gray-500 text-sm">
                     Residents
@@ -69,20 +86,20 @@ export function PlanetCard(props: PlanetCardProps) {
           </div>
         </div>
         <div className="my-2 text-center">
-          <Typography variant="h2" className="mb-4 text-space font-bold text-lg">
+          <Typography variant="h2" className="mb-4 text-space font-bold text-xl">
             {name}
           </Typography>
         </div>
 
         <div className="flex justify-between align-middle mb-2 border-t border-blue-gray-50 py-6 px-12">
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center justify-center gap-3">
             <SunIcon className="-mt-px h-6 w-6 text-blue-gray-700" />
-            <Typography className="font-medium text-blue-gray-700">
+            <Typography className="font-medium text-blue-gray-700 truncate">
               {climates.join(', ')}
             </Typography>
           </div>
-          <div className="flex items-center justify-center gap-2">
-            <Typography className="font-medium text-blue-gray-700">
+          <div className="flex items-center justify-center gap-3">
+            <Typography className="font-medium text-blue-gray-700 truncate">
               {terrains.join(', ')}
             </Typography>
             <GlobeAltIcon className="-mt-px h-6 w-6 text-blue-gray-700" />

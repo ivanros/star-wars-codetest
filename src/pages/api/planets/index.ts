@@ -31,7 +31,7 @@ export default async function handler(
         }
       `,
     });
-    planets = response.data;
+    planets = response.data.allPlanets.planets;
   } catch (e) {
     // TODO: Capture error as Sentry trace when available
     console.error(e);
