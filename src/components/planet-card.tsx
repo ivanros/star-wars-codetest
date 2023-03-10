@@ -1,18 +1,30 @@
 import { Planet } from '@/models/entities/planet';
+import { TrashIcon } from '@heroicons/react/24/outline';
 import { GlobeAltIcon, MagnifyingGlassIcon, SunIcon } from '@heroicons/react/24/solid';
-import { Avatar, Button, Card, Typography } from '@material-tailwind/react';
-import { useState } from 'react';
+import { Avatar, Card, IconButton, Typography } from '@material-tailwind/react';
+import { createElement, MouseEvent, useCallback, useState } from 'react';
 
 interface PlanetCardProps {
   data: Planet;
   onClick: Function;
+  onDelete?: Function;
 }
 
 export function PlanetCard(props: PlanetCardProps) {
-  const { data, onClick } = props;
+  const { data, onClick, onDelete } = props;
   const { id, name, diameter, climates, terrains, residentConnection, image } = data;
 
-  const [isCardHover, setIsCardHover] = useState(false);
+  const [isCardHover, setIsCardHover] = useState<Boolean>(false);
+
+  const handlePlanetDelete = useCallback(
+    (e: MouseEvent, id: String) => {
+      if (typeof onDelete !== 'undefined') {
+        onDelete(id);
+      }
+      e.stopPropagation();
+    },
+    [onDelete],
+  );
 
   return (
     <Card
@@ -42,10 +54,17 @@ export function PlanetCard(props: PlanetCardProps) {
               ) : null}
             </div>
           </div>
-          <div className="mt-10 flex w-full justify-center px-4 lg:order-3 lg:mt-0 lg:w-4/12 lg:justify-end lg:self-center">
-            <Button className="py-2 rounded-md text-white bg-indigo-500 shadow-gray-900 shadow-md drop-shadow-xl hover:scale-110 transition-all">
-              Edit planet
-            </Button>
+          <div className="mt-10 flex w-full justify-center px-4 lg:order-3 lg:mt-0 lg:w-4/12 lg:justify-end lg:self-center gap-3">
+            {typeof onDelete !== 'undefined' ? (
+              <IconButton
+                onClick={(e) => handlePlanetDelete(e, id)}
+                className="py-2 rounded-md bg-red-700 shadow-gray-900 shadow-md drop-shadow-xl hover:scale-110 transition-all"
+              >
+                {createElement(TrashIcon, {
+                  className: 'm-auto w-6 h-6 text-white',
+                })}
+              </IconButton>
+            ) : null}
           </div>
           <div className="w-full px-4 lg:order-1 lg:w-4/12">
             <div className="flex justify-center py-4 pt-8 lg:pt-4 gap-4">
