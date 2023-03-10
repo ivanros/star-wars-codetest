@@ -1,12 +1,13 @@
 import { Planet } from '@/models/entities/planet';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { ErrorResponse } from '@/models/internals/error-response';
+import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const planetsApi = createApi({
   reducerPath: 'createApi',
 
   baseQuery: fetchBaseQuery({
     baseUrl: '/api',
-  }),
+  }) as BaseQueryFn<string | FetchArgs, unknown, ErrorResponse, {}>,
 
   endpoints: (builder) => ({
     getPlanets: builder.query<Planet[], void>({
