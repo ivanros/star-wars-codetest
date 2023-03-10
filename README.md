@@ -1,38 +1,67 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+**Introduction**
 
-## Getting Started
+Welcome to the world of Star Wars, where you will find an infinite number of galaxies, planets and the most colorful beings. Enter an endless amount of valuable information about the habitat that awaits you in your next home or just gossip about the different visitors staying there.
 
-First, run the development server:
+[Click here to enter the atmosphere before launching it](https://www.youtube.com/watch?v=tGsKzZtRwxw).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+**How to launch**
+
+After entering the project through any terminal, execute the following commands
+
+```
+yarn install #or npm install
+yarn dev #or npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To run the test suite
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```
+yarn test #or npm test
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Project structure
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Within the download you'll find the following directories and files following the `kebab-case` pattern:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```
+star-wars-codetest
+    ├── public
+    ├── src
+    │   ├── assets
+    │   ├── components
+    │   ├── constants
+    │   ├── data
+    │   ├── models
+    │   ├── pages
+    │   │   └── api
+    │   ├── redux
+    │   ├── utils
+    │   ├── apollo-client.ts
+    │   └── global.css
+    ├── .eslintrc
+    ├── .gitignore
+    ├── .prettierrc
+    ├── jest.config.ts
+    ├── LICENSE
+    ├── next.config.js
+    ├── package.json
+    ├── postcss.config.js
+    ├── README.md
+    ├── tailwind.config.js
+    └── tsconfig.json
+```
 
-## Learn More
+The GraphQL client has been developed in the API part of Next.js as it is easier to communicate with this intermediate layer that can return custom responses to avoid exposing server errors that are of no interest to the client side. In addition, we avoid future CORS problems and can make use of HTTP header handling and authorization tokens.
 
-To learn more about Next.js, take a look at the following resources:
+## Accessibility
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+DOM code is full of roles and aria-labels so you will have no problem using the app with any voice recognition device or assistant such as Alexa, Siri or Google Assistant.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Technology stack
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [Next.js](https://nextjs.org/) as the React framework builded in [Typescript](https://www.typescriptlang.org/) syntax
+- [Redux](https://es.redux.js.org/) with RTK toolkit as the state management system
+- [Tailwind](https://tailwindcss.com/) as the CSS framework
+- [GraphQL](https://graphql.org/) as the query language for the API
+- [Jest](https://jestjs.io/es-ES/) and [Testing Library](https://testing-library.com/) as the UT and IT Testing framework
+- [ESLint](https://eslint.org/) as linter and [Prettier](https://prettier.io/) as code formatter
