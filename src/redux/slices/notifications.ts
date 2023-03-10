@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  type: 'error',
-  message: '',
-  show: false,
+  type: 'error' as String,
+  message: '' as String,
+  show: false as Boolean,
 };
 
 export const notificationSlice = createSlice({

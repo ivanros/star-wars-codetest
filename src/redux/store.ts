@@ -1,9 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { notificationSlice } from './slices/notifications';
-import { planetsApi } from './slices/planets';
+import { planetsApi, planetsSlice } from './slices/planets';
 
 const reducerMap = {
   [notificationSlice.name]: notificationSlice.reducer,
+  [planetsSlice.name]: planetsSlice.reducer,
   [planetsApi.reducerPath]: planetsApi.reducer,
 };
 

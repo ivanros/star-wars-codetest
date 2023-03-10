@@ -1,6 +1,11 @@
 import { Planet } from '@/models/entities/planet';
 import { ErrorResponse } from '@/models/internals/error-response';
+import { createSlice } from '@reduxjs/toolkit';
 import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
+const initialState = {
+  data: [] as Planet[],
+};
 
 export const planetsApi = createApi({
   reducerPath: 'createApi',
@@ -17,6 +22,27 @@ export const planetsApi = createApi({
       query: (planetId) => `/planets/${planetId}`,
     }),
   }),
+});
+
+export const planetsSlice = createSlice({
+  name: 'planets',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addMatcher(planetsApi.endpoints.getPlanets.matchFulfilled, (state, action) => {
+      // Retrieving planets into the store
+      state.data = action.payload;
+    });
+    builder.addMatcher(planetsApi.endpoints.getPlanetById.matchFulfilled, (state, action) => {
+      // Updating retrieved planet into the planet list store
+      state.data = state.data.map((planet: Planet) => {
+        if (planet.id === action.payload.id) {
+          return { ...planet, ...action.payload };
+        }
+        return planet;
+      });
+    });
+  },
 });
 
 export const { useGetPlanetsQuery, useGetPlanetByIdQuery } = planetsApi;
