@@ -9,7 +9,7 @@ interface NavbarProps {
 
 export function Navbar(props: NavbarProps) {
   const { brandName, routes } = props;
-  const [openNav, setOpenNav] = React.useState(false);
+  const [openNav, setOpenNav] = React.useState<Boolean>(false);
 
   React.useEffect(() => {
     window.addEventListener('resize', () => window.innerWidth >= 960 && setOpenNav(false));

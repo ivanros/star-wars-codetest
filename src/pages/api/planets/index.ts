@@ -1,10 +1,10 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
 import client from '@/apollo-client';
-import { gql } from '@apollo/client';
+import { API_ERRORS } from '@/constants/errors.constants';
 import { Planet } from '@/models/entities/planet';
 import { ErrorResponse } from '@/models/internals/error-response';
-import { API_ERRORS } from '@/constants/errors.constants';
 import { getRandomPlanetImage } from '@/utils/image-utils';
+import { gql } from '@apollo/client';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
   req: NextApiRequest,

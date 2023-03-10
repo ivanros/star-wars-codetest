@@ -9,7 +9,7 @@ interface LoadingSpinnerProps {
 export function LoadingSpinner(props: LoadingSpinnerProps) {
   const { texts } = props;
 
-  const [currentTextIndex, setCurrentTextIndex] = useState(0);
+  const [currentTextIndex, setCurrentTextIndex] = useState<number>(0);
 
   // Alternates loading text per LOADING_TEXT_TIME
   useEffect(() => {
