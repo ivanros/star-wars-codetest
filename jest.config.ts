@@ -8,14 +8,9 @@ const jestConfig: Config = {
   testEnvironment: 'jsdom',
   extensionsToTreatAsEsm: ['.ts', '.tsx', '.jsx'],
   transform: {
-    '^.+\\.(ts|tsx|js|jsx)$': 'ts-jest',
+    '^.+\\.(ts|tsx|js|jsx)$': ['ts-jest', { tsconfig: './tsconfig.test.json' }],
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  globals: {
-    'ts-jest': {
-      tsconfig: './tsconfig.test.json',
-    },
-  },
 };
 
 export default jestConfig;
