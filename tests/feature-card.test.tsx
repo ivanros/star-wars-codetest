@@ -5,14 +5,12 @@ import { featuresData } from '../src/data/app-features';
 
 describe('Feature Card', () => {
   it('checks all props are printed into the card', async () => {
-    const props = featuresData[0];
+    const { title, color, icon, description } = featuresData[0];
 
-    render(<FeatureCard {...props} />);
+    render(<FeatureCard title={title} color={color} icon={icon} description={description} />);
 
     expect(screen.getByRole('icon-button')).toBeInTheDocument();
-    expect(screen.getByLabelText(`${props.title} title`)).toHaveTextContent(props.title);
-    expect(screen.getByLabelText(`${props.title} description`)).toHaveTextContent(
-      props.description,
-    );
+    expect(screen.getByLabelText(`${title} title`)).toHaveTextContent(title);
+    expect(screen.getByLabelText(`${title} description`)).toHaveTextContent(description);
   });
 });
