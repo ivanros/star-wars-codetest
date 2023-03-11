@@ -55,8 +55,9 @@ star-wars-codetest
     │   ├── apollo-client.ts
     │   └── global.css
     ├── .eslintrc
-    ├── .gitignore
+    ├── .pre-commit-config.yaml
     ├── .prettierrc
+    ├── Dockerfile
     ├── jest.config.ts
     ├── LICENSE
     ├── next.config.js
@@ -64,7 +65,8 @@ star-wars-codetest
     ├── postcss.config.js
     ├── README.md
     ├── tailwind.config.js
-    └── tsconfig.json
+    ├── tsconfig.json
+    └── tsconfig.test.json
 ```
 
 The GraphQL client has been developed in the API part of Next.js as it is easier to communicate with this intermediate layer that can return custom responses to avoid exposing server errors that are of no interest to the client side. In addition, we avoid future CORS problems and can make use of HTTP header handling and authorization tokens.
