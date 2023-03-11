@@ -2,7 +2,7 @@
 
 Welcome to the world of Star Wars, where you will find an infinite number of galaxies, planets and the most colorful beings. Enter an endless amount of valuable information about the habitat that awaits you in your next home or just gossip about the different visitors staying there.
 
-[Click here to enter the atmosphere before launching it](https://www.youtube.com/watch?v=tGsKzZtRwxw).
+[Click here](https://www.youtube.com/watch?v=tGsKzZtRwxw) to enter the atmosphere before launching it
 
 **How to launch**
 
@@ -17,6 +17,20 @@ To run the test suite
 
 ```
 yarn test #or npm test
+```
+
+To run pre-commit hook manually
+
+```
+pip install pre-commit #or brew install pre-commit
+pre-commit install -f
+pre-commit run --all-files
+```
+
+To run the project in a Dockerized way
+
+```
+docker-compose
 ```
 
 ## Project structure
