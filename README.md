@@ -19,19 +19,21 @@ To run the test suite
 yarn test #or npm test
 ```
 
-To run pre-commit hook manually
+To run pre-commit hook manually (you should have pre-commit installed)
 
 ```
-pip install pre-commit #or brew install pre-commit
 pre-commit install -f
 pre-commit run --all-files
 ```
 
-To run the project in a Dockerized way
+To run the project in a Dockerized way (you should have Docker installed and daemon started)
 
 ```
-docker-compose
+docker build -t start-wars-codetest .
+docker run -d -p 3000:3000 start-wars-codetest
 ```
+
+Then go to `localhost:3000` and you will see the deployed app
 
 ## Project structure
 
