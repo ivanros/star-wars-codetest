@@ -19,13 +19,14 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
     diameter,
     climates,
     terrains,
-    residentConnection: { residents },
+    residentConnection,
     image,
     created,
     population,
     orbitalPeriod,
     rotationPeriod,
   } = data;
+  const residents = (residentConnection && residentConnection.residents) || [];
   const [currentMode, setCurrentMode] = useState<String>();
 
   useEffect(() => {
@@ -111,22 +112,20 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
                 </div>
               )}
             </div>
-            {residents ? (
-              <div className="p-3 flex flex-col text-center align-middle min-w-0 w-60">
-                <Typography variant="small" className="font-light text-blue-gray-500 text-sm">
-                  Residents
-                </Typography>
-                <Typography variant="lead" className="font-bold text-md truncate">
-                  {residents.length || 0}
-                </Typography>
-              </div>
-            ) : null}
+            <div className="p-3 flex flex-col text-center align-middle min-w-0 w-60">
+              <Typography variant="small" className="font-light text-blue-gray-500 text-sm">
+                Residents
+              </Typography>
+              <Typography variant="lead" className="font-bold text-md truncate">
+                {residents.length || 0}
+              </Typography>
+            </div>
             <div className="p-3 flex flex-col text-center align-middle min-w-0 w-60">
               <Typography variant="small" className="font-light text-blue-gray-500 text-sm">
                 Climates
               </Typography>
               <Typography variant="lead" className="font-bold text-md truncate">
-                {climates.join(', ')}
+                {climates.length > 0 ? climates.join(', ') : 'unknown'}
               </Typography>
             </div>
             <div className="p-3 flex flex-col text-center align-middle min-w-0 w-60">
@@ -134,7 +133,7 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
                 Terrains
               </Typography>
               <Typography variant="lead" className="font-bold text-md truncate">
-                {terrains.join(', ')}
+                {terrains.length > 0 ? terrains.join(', ') : 'unknown'}
               </Typography>
             </div>
             <div className="p-3 flex flex-col text-center align-middle min-w-0 w-60">

@@ -11,30 +11,30 @@ import { useDispatch } from 'react-redux';
 
 interface PlanetProps {
   planetId: string;
+  isNewPlanet: Boolean;
 }
 
 export default function PlanetPage(props: PlanetProps) {
-  const { planetId } = props;
+  const { planetId, isNewPlanet } = props;
   const [planet, setPlanet] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
+  const getPlanetFromCache = useCallback(() => {
+    return store.getState().planets.data.find((planet: Planet) => planet.id === planetId);
+  }, [planetId]);
+
   const savePlanetChanges = useCallback(
     async (key: String, value: any) => {
-      console.log('key', key, value);
       await dispatch(editPlanetProperty({ id: planetId, key, value }));
-      const editedPlanet = store
-        .getState()
-        .planets.data.find((planet: Planet) => planet.id === planetId);
-      console.log(editedPlanet);
-      setPlanet(editedPlanet);
+      setPlanet(getPlanetFromCache());
     },
-    [planetId, dispatch],
+    [planetId, getPlanetFromCache, dispatch],
   );
 
   useEffect(() => {
     // Retrieves planet data by the id provided via query param
-    async function getPlanetById(id: string) {
+    async function requestPlanetById(id: string) {
       setIsLoading(true);
       const { data, error } = await dispatch(
         planetsApi.endpoints.getPlanetById.initiate(id) as any,
@@ -47,8 +47,14 @@ export default function PlanetPage(props: PlanetProps) {
       setIsLoading(false);
     }
 
-    getPlanetById(planetId);
-  }, [planetId, dispatch]);
+    // First searchs the planet on cache, if it does not exist then asks to API
+    const planet = getPlanetFromCache();
+    if (!planet) {
+      requestPlanetById(planetId);
+    } else {
+      setPlanet(planet);
+    }
+  }, [planetId, isNewPlanet, getPlanetFromCache, dispatch]);
 
   return (
     <div className="flex justify-center py-40 px-40 h-full w-full">
@@ -57,7 +63,7 @@ export default function PlanetPage(props: PlanetProps) {
           {planet ? (
             <PlanetCardDetail data={planet} onEdit={savePlanetChanges} />
           ) : (
-            <Typography variant="lead" color="white" className="opacity-80 px-[20%]">
+            <Typography variant="lead" color="white" className="opacity-80 px-[20%] text-center">
               We could not find the requested planet, maybe we just need to change some galaxy
               parameters... Try again later.
             </Typography>
@@ -79,6 +85,6 @@ export default function PlanetPage(props: PlanetProps) {
 // Ensure that we retrieve a non-undefined planet id from params
 export function getServerSideProps(context: BaseContext) {
   return {
-    props: { planetId: context.params.id },
+    props: { planetId: context.params.id, isNewPlanet: !!context.query.new },
   };
 }

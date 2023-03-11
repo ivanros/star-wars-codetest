@@ -2,11 +2,12 @@ import LoadingSpinner from '@/components/loading-spinner';
 import PlanetCard from '@/components/planet-card';
 import { Planet } from '@/models/entities/planet';
 import { showNotification } from '@/redux/slices/notifications';
-import { deletePlanet, useGetPlanetsQuery } from '@/redux/slices/planets';
+import { createPlanet, deletePlanet, useGetPlanetsQuery } from '@/redux/slices/planets';
 import { store } from '@/redux/store';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import { Button, Typography } from '@material-tailwind/react';
 import { useRouter } from 'next/router';
+import { ParsedUrlQueryInput } from 'querystring';
 import { createElement, Key, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -16,6 +17,16 @@ export default function PlanetsPage() {
   const router = useRouter();
   const dispatch = useDispatch();
 
+  const goToPlanet = useCallback(
+    (planetId: string, query: ParsedUrlQueryInput | string) => {
+      router.push({
+        pathname: `/planets/${planetId}`,
+        query,
+      });
+    },
+    [router],
+  );
+
   const removePlanetFromList = useCallback(
     (id: string) => {
       dispatch(deletePlanet(id));
@@ -24,7 +35,9 @@ export default function PlanetsPage() {
     [dispatch],
   );
 
-  const addPlanetToList = useCallback(() => {}, []);
+  const addPlanetToList = useCallback(async () => {
+    await dispatch(createPlanet());
+  }, [dispatch]);
 
   // Shows API error if exists
   useEffect(() => {
@@ -55,13 +68,13 @@ export default function PlanetsPage() {
                 <PlanetCard
                   key={index}
                   data={planet}
-                  onClick={(id: string) => router.push(`/planets/${id}`)}
+                  onClick={goToPlanet}
                   onDelete={removePlanetFromList}
                 />
               ))}
             </div>
           ) : (
-            <Typography variant="lead" color="white" className="opacity-80 px-[20%]">
+            <Typography variant="lead" color="white" className="opacity-80 px-[20%] text-center">
               We could not find our planets, maybe we just need to change some galaxy parameters...
               Try again later.
             </Typography>

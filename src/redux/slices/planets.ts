@@ -7,6 +7,15 @@ const initialState = {
   data: [] as Planet[],
 };
 
+const emptyPlanet = {
+  name: 'New Planet',
+  image: '/planet_1.png',
+  diameter: 0,
+  climates: [],
+  terrains: [],
+  residentConnection: { totalCount: 0 },
+};
+
 export const planetsApi = createApi({
   reducerPath: 'createApi',
 
@@ -28,8 +37,10 @@ export const planetsSlice = createSlice({
   name: 'planets',
   initialState,
   reducers: {
-    addPlanet(state, action) {
-      state.data.push({ ...action.payload });
+    createPlanet(state) {
+      // Generating a digit random ID for the new planet
+      const id = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER).toString();
+      state.data.unshift({ ...emptyPlanet, id });
       return state;
     },
     deletePlanet(state, action) {
@@ -44,7 +55,6 @@ export const planetsSlice = createSlice({
         }
         return planet;
       });
-      console.log('s', id, key, value);
       return state;
     },
   },
@@ -59,8 +69,8 @@ export const planetsSlice = createSlice({
     });
     builder.addMatcher(planetsApi.endpoints.getPlanetById.matchFulfilled, (state, action) => {
       // Updating retrieved planet into the planet list store
-      const planet = state.data.find((planet: Planet) => planet.id === action.payload.id);
-      if (planet) {
+      const planetExists = state.data.some((planet: Planet) => planet.id === action.payload.id);
+      if (planetExists) {
         state.data = state.data.map((planet: Planet) => {
           if (planet.id === action.payload.id) {
             return { ...planet, ...action.payload };
@@ -75,4 +85,4 @@ export const planetsSlice = createSlice({
 });
 
 export const { useGetPlanetsQuery, useGetPlanetByIdQuery } = planetsApi;
-export const { addPlanet, deletePlanet, editPlanetProperty } = planetsSlice.actions;
+export const { createPlanet, deletePlanet, editPlanetProperty } = planetsSlice.actions;
