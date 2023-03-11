@@ -7,8 +7,8 @@ const Layout = ({ children }: PropsWithChildren) => {
   return (
     <>
       <Navbar routes={routes} />
-      <div className="min-h-screen h-max w-full antialiased bg-gradient-to-tl from-space via-galaxy to-space">
-        <div className="py-20 px-20">{children}</div>
+      <div className="min-h-screen w-full antialiased bg-gradient-to-tl from-space via-galaxy to-space overflow-y-auto lg:overflow-hidden">
+        <div className="px-10 lg:py-20 lg:px-20">{children}</div>
       </div>
       <Footer />
     </>

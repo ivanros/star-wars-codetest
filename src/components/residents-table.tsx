@@ -10,32 +10,18 @@ export function ResidentsTable(props: ResidentsTableProps) {
   const { data } = props;
 
   return (
-    <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+    <div className="inline-block min-w-full py-2 lg:px-8">
       <div className="overflow-hidden">
         <table className="min-w-full text-center text-sm font-light">
           <thead className="border-b bg-neutral-50 font-medium dark:border-neutral-200 dark:text-neutral-800">
             <tr>
-              <th scope="col" className="px-6 py-4">
-                Name
-              </th>
-              <th scope="col" className="px-6 py-4">
-                Gender
-              </th>
-              <th scope="col" className="px-6 py-4">
-                Species
-              </th>
-              <th scope="col" className="px-6 py-4">
-                Height
-              </th>
-              <th scope="col" className="px-6 py-4">
-                Mass
-              </th>
-              <th scope="col" className="px-6 py-4">
-                Hair color
-              </th>
-              <th scope="col" className="px-6 py-4">
-                Skin color
-              </th>
+              {['Name', 'Gender', 'Species', 'Height', 'Mass', 'Hair color', 'Skin color'].map(
+                (header: string) => (
+                  <th key={header} scope="col" className="px-4 py-2 lg:px-6 lg:py-4">
+                    {header}
+                  </th>
+                ),
+              )}
             </tr>
           </thead>
           <tbody>

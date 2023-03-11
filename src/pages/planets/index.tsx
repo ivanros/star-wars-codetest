@@ -66,9 +66,9 @@ export default function PlanetsPage() {
   }, [planets, orderBy, searchBy, orderByProperty, searchByText]);
 
   return (
-    <div className="flex flex-col justify-center py-20 px-40 h-full w-full">
-      <div className="flex justify-center mb-12 gap-14">
-        <div className="w-44">
+    <div className="flex flex-col justify-center py-20 lg:px-40 h-full w-full">
+      <div className="flex flex-col items-center justify-center gap-6 mb-6 lg:gap-14 lg:flex-row lg:mb-12">
+        <div className="lg:w-44">
           <Input
             label="Search..."
             value={searchBy}
@@ -76,7 +76,7 @@ export default function PlanetsPage() {
             className="text-white"
           />
         </div>
-        <div className="w-44">
+        <div className="lg:w-44">
           <Select
             label="Order by"
             value={orderBy}
@@ -91,7 +91,7 @@ export default function PlanetsPage() {
           </Select>
         </div>
       </div>
-      <div className="flex justify-end mb-10">
+      <div className="flex justify-center mb-28 lg:mb-10 lg:justify-end">
         <Button
           variant="outlined"
           className="flex items-center gap-3 rounded-md shadow-gray-900 shadow-md drop-shadow-xl hover:scale-110 hover:bg-green-600 hover:opacity-1 transition-all"
@@ -117,7 +117,7 @@ export default function PlanetsPage() {
               ))}
             </div>
           ) : (
-            <Typography variant="lead" color="white" className="opacity-80 px-[20%] text-center">
+            <Typography variant="lead" color="white" className="opacity-80 text-center lg:px-[20%]">
               We could not find our planets, maybe we just need to change some galaxy parameters...
               Try again later.
             </Typography>

@@ -35,11 +35,11 @@ export default function PlanetPage(props: PlanetProps) {
   }, [planetId, router]);
 
   return (
-    <div className="flex justify-center py-40 px-40 h-full w-full">
+    <div className="flex justify-center h-full w-full pt-60 pb-10 lg:pt-40 lg:pb-40 lg:px-40">
       {planet ? (
         <PlanetCardDetail data={planet} onEdit={savePlanetChanges} />
       ) : (
-        <Typography variant="lead" color="white" className="opacity-80 px-[20%] text-center">
+        <Typography variant="lead" color="white" className="opacity-80 text-center lg:px-[20%]">
           We could not find the requested planet, maybe we just need to change some galaxy
           parameters... Try again later.
         </Typography>

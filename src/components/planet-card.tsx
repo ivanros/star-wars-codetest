@@ -104,14 +104,14 @@ export function PlanetCard(props: PlanetCardProps) {
           </Typography>
         </div>
 
-        <div className="flex justify-between align-middle mb-2 border-t border-blue-gray-50 py-6 px-12">
+        <div className="flex flex-col justify-between align-middle mb-2 border-t border-blue-gray-50 py-6 lg:px-12 lg:flex-row">
           <div className="flex items-center justify-center gap-3">
             <SunIcon className="-mt-px h-6 w-6 text-blue-gray-700" />
             <Typography className="font-medium text-blue-gray-700 truncate">
               {climates.join(', ')}
             </Typography>
           </div>
-          <div className="flex items-center justify-center gap-3">
+          <div className="flex flex-row-reverse items-center justify-center gap-3 lg:flex-row">
             <Typography className="font-medium text-blue-gray-700 truncate">
               {terrains.join(', ')}
             </Typography>

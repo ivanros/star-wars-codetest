@@ -73,6 +73,10 @@ The GraphQL client has been developed in the API part of Next.js as it is easier
 
 DOM code is full of roles and aria-labels so you will have no problem using the app with any voice recognition device or assistant such as Alexa, Siri or Google Assistant.
 
+## Responsive Design
+
+Includes some breakpoints to provide adaptative user interfaces, so you should try to see this amazing application in your mobile phone!
+
 ## Technology stack
 
 - [Next.js](https://nextjs.org/) as the React framework builded in [Typescript](https://www.typescriptlang.org/) syntax

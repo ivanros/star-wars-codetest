@@ -36,7 +36,7 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
   return (
     <Card className="relative flex w-full min-w-0 flex-col break-words rounded-3xl bg-white shadow-xl shadow-gray-500/5">
       <div className="px-6">
-        <div className="flex flex-wrap justify-center">
+        <div className="flex flex-wrap justify-center mb-4 lg:mb-0">
           <div className="flex w-full justify-center px-4 lg:order-2 lg:w-3/12">
             {image ? (
               <div className="relative -mt-28 w-48">
@@ -53,7 +53,7 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
           <div className="mt-10 flex w-full justify-center px-4 lg:order-3 lg:mt-0 lg:w-4/12 lg:justify-end lg:self-center">
             <Button
               variant="outlined"
-              className="flex items-center gap-3 rounded-md bg-galaxy shadow-gray-900 shadow-md drop-shadow-xl hover:scale-110 hover:bg-teal-600 hover:opacity-1 transition-all"
+              className="flex items-center gap-3 rounded-md bg-galaxy shadow-gray-900 shadow-md drop-shadow-xl hover:scale-110 hover:bg-teal-600 hover:opacity-1 transition-all mb-10 lg:mb-0"
               onClick={() => setCurrentMode(currentMode === 'view' ? 'edit' : 'view')}
               aria-label={currentMode === 'view' ? 'Edit Planet' : 'View Mode'}
             >
@@ -65,7 +65,7 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
               </Typography>
             </Button>
           </div>
-          <div className="w-full px-4 lg:w-4/12 flex items-center">
+          <div className="flex justify-between items-center w-full px-2 lg:px-4 lg:w-4/12 lg:justify-start">
             <Typography variant="small" className="font-light text-blue-gray-500 text-md mr-10">
               Name
             </Typography>
@@ -78,7 +78,7 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
                 {name || ''}
               </Typography>
             ) : (
-              <div className="w-40">
+              <div className="w-full lg:w-40">
                 <Input
                   variant="standard"
                   defaultValue={name.toString()}
@@ -90,7 +90,7 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
           </div>
         </div>
 
-        <div className="flex justify-between align-middle mb-2 border-t border-blue-gray-50 py-6 px-12">
+        <div className="flex justify-between align-middle mb-2 border-t border-blue-gray-50 lg:py-6 lg:px-12">
           <div className="flex justify-center py-4 pt-8 lg:pt-4 gap-4 flex-wrap">
             <div className="p-3 flex flex-col text-center align-middle min-w-0 w-60">
               <Typography variant="small" className="font-light text-blue-gray-500 text-sm">
@@ -250,7 +250,7 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
             </div>
           </div>
         </div>
-        <div className="overflow-x-auto sm:-mx-6 lg:-mx-8 mb-10 px-12" aria-label="Residents table">
+        <div className="overflow-x-auto mb-10 lg:px-12" aria-label="Residents table">
           {residents.length > 0 ? <ResidentsTable data={residents} /> : null}
         </div>
       </div>

@@ -14,7 +14,7 @@ export function FeatureCard(props: FeatureCardProps) {
 
   return (
     <Card className="rounded-2xl shadow-lg shadow-gray-500/10">
-      <CardBody className="px-8 text-center">
+      <CardBody className="px-2 lg:px-8 text-center">
         {typeof icon !== 'undefined' ? (
           <IconButton
             role="icon-button"
@@ -32,7 +32,10 @@ export function FeatureCard(props: FeatureCardProps) {
           {title}
         </Typography>
         {typeof description !== 'undefined' ? (
-          <Typography className="font-normal text-gray-900" aria-label={`${title} description`}>
+          <Typography
+            className="font-normal text-gray-900 text-sm lg:text-md"
+            aria-label={`${title} description`}
+          >
             {description}
           </Typography>
         ) : null}
