@@ -1,3 +1,4 @@
+import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import FeatureCard from '../src/components/feature-card';
 import { featuresData } from '../src/data/app-features';

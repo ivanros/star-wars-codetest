@@ -210,7 +210,7 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
                   className="font-bold text-md truncate"
                   aria-label="Planet orbital period"
                 >
-                  {orbitalPeriod || 0}
+                  {orbitalPeriod || '-'}
                 </Typography>
               ) : (
                 <div className="w-40">
@@ -234,7 +234,7 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
                   className="font-bold text-md truncate"
                   aria-label="Planet rotation period"
                 >
-                  {rotationPeriod || 0}
+                  {rotationPeriod || '-'}
                 </Typography>
               ) : (
                 <div className="w-40">
@@ -250,10 +250,7 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
             </div>
           </div>
         </div>
-        <div
-          className="overflow-x-auto sm:-mx-6 lg:-mx-8 mb-10 px-12"
-          aria-label="Planet residents"
-        >
+        <div className="overflow-x-auto sm:-mx-6 lg:-mx-8 mb-10 px-12" aria-label="Residents table">
           {residents.length > 0 ? <ResidentsTable data={residents} /> : null}
         </div>
       </div>
