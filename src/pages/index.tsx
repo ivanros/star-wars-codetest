@@ -1,7 +1,6 @@
 import FeatureCard from '@/components/feature-card';
 import { featuresData } from '@/data';
 import { Button, Typography } from '@material-tailwind/react';
-import { color } from '@material-tailwind/react/types/components/input';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -39,7 +38,7 @@ export default function Home() {
               <FeatureCard
                 key={title}
                 title={title}
-                color={color as color}
+                color={color}
                 icon={icon}
                 description={description}
               />

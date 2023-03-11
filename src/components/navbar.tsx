@@ -1,4 +1,4 @@
-import { MobileNav, Navbar as MTNavbar, Typography } from '@material-tailwind/react';
+import { Navbar as MTNavbar, Typography } from '@material-tailwind/react';
 import Link from 'next/link';
 import React from 'react';
 
@@ -9,7 +9,7 @@ interface NavbarProps {
 
 export function Navbar(props: NavbarProps) {
   const { brandName, routes } = props;
-  const [openNav, setOpenNav] = React.useState<Boolean>(false);
+  const [openNav, setOpenNav] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     window.addEventListener('resize', () => window.innerWidth >= 960 && setOpenNav(false));
@@ -33,16 +33,16 @@ export function Navbar(props: NavbarProps) {
   );
 
   return (
-    <MTNavbar color="transparent" className="absolute py-3 px-20 z-10">
-      <div className="container mx-auto flex items-center justify-between text-white">
+    <MTNavbar
+      color="transparent"
+      className="fixed min-w-full py-3 rounded-none bg-galaxy lg:absolute lg:px-20 lg:bg-transparent z-10"
+    >
+      <div className="container flex items-center justify-between text-white">
         <Link href="/">
           <Typography className="mr-4 ml-2 cursor-pointer py-1.5 font-bold">{brandName}</Typography>
         </Link>
-        <div className="hidden lg:block">{navList}</div>
+        {navList}
       </div>
-      <MobileNav className="rounded-xl bg-white px-4 pt-2 pb-4 text-blue-gray-900" open={openNav}>
-        <div className="container mx-auto">{navList}</div>
-      </MobileNav>
     </MTNavbar>
   );
 }

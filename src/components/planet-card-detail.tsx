@@ -45,6 +45,7 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
                   alt="Planet picture"
                   variant="circular"
                   className="h-full w-full"
+                  aria-label="Planet picture"
                 />
               </div>
             ) : null}
@@ -54,6 +55,7 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
               variant="outlined"
               className="flex items-center gap-3 rounded-md bg-galaxy shadow-gray-900 shadow-md drop-shadow-xl hover:scale-110 hover:bg-teal-600 hover:opacity-1 transition-all"
               onClick={() => setCurrentMode(currentMode === 'view' ? 'edit' : 'view')}
+              aria-label={currentMode === 'view' ? 'Edit Planet' : 'View Mode'}
             >
               {createElement(currentMode === 'view' ? PencilIcon : EyeIcon, {
                 className: 'm-auto w-6 h-6 text-white',
@@ -68,7 +70,11 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
               Name
             </Typography>
             {currentMode === 'view' ? (
-              <Typography variant="lead" className="font-bold text-md truncate">
+              <Typography
+                variant="lead"
+                className="font-bold text-md truncate"
+                aria-label="Planet name"
+              >
                 {name || ''}
               </Typography>
             ) : (
@@ -77,6 +83,7 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
                   variant="standard"
                   defaultValue={name.toString()}
                   onBlur={(e) => onEdit('name', e.target.value)}
+                  aria-label="Planet input name"
                 />
               </div>
             )}
@@ -89,7 +96,11 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
               <Typography variant="small" className="font-light text-blue-gray-500 text-sm">
                 ID
               </Typography>
-              <Typography variant="lead" className="font-bold text-md truncate">
+              <Typography
+                variant="lead"
+                className="font-bold text-md truncate"
+                aria-label="Planet id"
+              >
                 {id || ''}
               </Typography>
             </div>
@@ -98,7 +109,11 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
                 Diameter
               </Typography>
               {currentMode === 'view' ? (
-                <Typography variant="lead" className="font-bold text-md truncate">
+                <Typography
+                  variant="lead"
+                  className="font-bold text-md truncate"
+                  aria-label="Planet diameter"
+                >
                   {diameter || 'unknown'}
                 </Typography>
               ) : (
@@ -108,6 +123,7 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
                     variant="standard"
                     defaultValue={diameter?.toString()}
                     onBlur={(e) => onEdit('diameter', +e.target.value)}
+                    aria-label="Planet input diameter"
                   />
                 </div>
               )}
@@ -116,7 +132,11 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
               <Typography variant="small" className="font-light text-blue-gray-500 text-sm">
                 Residents
               </Typography>
-              <Typography variant="lead" className="font-bold text-md truncate">
+              <Typography
+                variant="lead"
+                className="font-bold text-md truncate"
+                aria-label="Planet residents"
+              >
                 {residents.length || 0}
               </Typography>
             </div>
@@ -124,7 +144,11 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
               <Typography variant="small" className="font-light text-blue-gray-500 text-sm">
                 Climates
               </Typography>
-              <Typography variant="lead" className="font-bold text-md truncate">
+              <Typography
+                variant="lead"
+                className="font-bold text-md truncate"
+                aria-label="Planet climates"
+              >
                 {climates.length > 0 ? climates.join(', ') : 'unknown'}
               </Typography>
             </div>
@@ -132,7 +156,11 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
               <Typography variant="small" className="font-light text-blue-gray-500 text-sm">
                 Terrains
               </Typography>
-              <Typography variant="lead" className="font-bold text-md truncate">
+              <Typography
+                variant="lead"
+                className="font-bold text-md truncate"
+                aria-label="Planet terrains"
+              >
                 {terrains.length > 0 ? terrains.join(', ') : 'unknown'}
               </Typography>
             </div>
@@ -140,7 +168,11 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
               <Typography variant="small" className="font-light text-blue-gray-500 text-sm">
                 Created date
               </Typography>
-              <Typography variant="lead" className="font-bold text-md truncate">
+              <Typography
+                variant="lead"
+                className="font-bold text-md truncate"
+                aria-label="Planet created date"
+              >
                 {created ? new Date(created).toLocaleDateString() : '-'}
               </Typography>
             </div>
@@ -149,7 +181,11 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
                 Population
               </Typography>
               {currentMode === 'view' ? (
-                <Typography variant="lead" className="font-bold text-md truncate">
+                <Typography
+                  variant="lead"
+                  className="font-bold text-md truncate"
+                  aria-label="Planet population"
+                >
                   {population || 0}
                 </Typography>
               ) : (
@@ -159,6 +195,7 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
                     variant="standard"
                     defaultValue={(population || 0).toString()}
                     onBlur={(e) => onEdit('population', +e.target.value)}
+                    aria-label="Planet input population"
                   />
                 </div>
               )}
@@ -168,7 +205,11 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
                 Orbital period
               </Typography>
               {currentMode === 'view' ? (
-                <Typography variant="lead" className="font-bold text-md truncate">
+                <Typography
+                  variant="lead"
+                  className="font-bold text-md truncate"
+                  aria-label="Planet orbital period"
+                >
                   {orbitalPeriod || 0}
                 </Typography>
               ) : (
@@ -178,6 +219,7 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
                     variant="standard"
                     defaultValue={(orbitalPeriod || 0).toString()}
                     onBlur={(e) => onEdit('orbitalPeriod', +e.target.value)}
+                    aria-label="Planet input orbital period"
                   />
                 </div>
               )}
@@ -187,7 +229,11 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
                 Rotation period
               </Typography>
               {currentMode === 'view' ? (
-                <Typography variant="lead" className="font-bold text-md truncate">
+                <Typography
+                  variant="lead"
+                  className="font-bold text-md truncate"
+                  aria-label="Planet rotation period"
+                >
                   {rotationPeriod || 0}
                 </Typography>
               ) : (
@@ -197,14 +243,18 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
                     variant="standard"
                     defaultValue={(rotationPeriod || 0).toString()}
                     onBlur={(e) => onEdit('rotationPeriod', +e.target.value)}
+                    aria-label="Planet input rotation period"
                   />
                 </div>
               )}
             </div>
           </div>
         </div>
-        <div className="overflow-x-auto sm:-mx-6 lg:-mx-8 mb-10 px-12">
-          {residents && residents.length ? <ResidentsTable data={residents} /> : null}
+        <div
+          className="overflow-x-auto sm:-mx-6 lg:-mx-8 mb-10 px-12"
+          aria-label="Planet residents"
+        >
+          {residents.length > 0 ? <ResidentsTable data={residents} /> : null}
         </div>
       </div>
     </Card>

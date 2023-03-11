@@ -4,7 +4,7 @@ import { createElement, ForwardRefExoticComponent, SVGProps } from 'react';
 
 interface FeatureCardProps {
   icon?: ForwardRefExoticComponent<SVGProps<SVGSVGElement>>;
-  color: color;
+  color: string;
   title: string;
   description?: string;
 }
@@ -18,7 +18,7 @@ export function FeatureCard(props: FeatureCardProps) {
         {typeof icon !== 'undefined' ? (
           <IconButton
             role="icon-button"
-            color={color}
+            color={color as color}
             className={
               'flex justify-center m-auto w-12 h-12 mb-6 rounded-full shadow-lg shadow-gray-400'
             }
