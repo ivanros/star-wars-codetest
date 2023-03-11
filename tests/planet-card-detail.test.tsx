@@ -1,7 +1,7 @@
 import { Planet } from '@/models/entities/planet';
 import { Resident } from '@/models/entities/resident';
 import '@testing-library/jest-dom';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import PlanetCardDetail from '../src/components/planet-card-detail';
 
 const today = Date.now();
@@ -97,33 +97,33 @@ describe('PlanetCardDetail', () => {
     expect(screen.queryByLabelText(editPlanetBtnName)).toBeInTheDocument();
     expect(screen.queryByLabelText(viewModeBtnName)).not.toBeInTheDocument();
 
-    const editBtn = screen.getByLabelText(editPlanetBtnName);
-    editBtn.click();
-
-    await waitFor(() => {
-      expect(screen.queryByLabelText(editPlanetBtnName)).not.toBeInTheDocument();
-      expect(screen.queryByLabelText(viewModeBtnName)).toBeInTheDocument();
-
-      // Checks that modificable fields have been changed to input elements
-      expect(screen.queryByLabelText('Planet name')).not.toBeInTheDocument();
-      expect(screen.queryByLabelText('Planet input name')).toBeInTheDocument();
-      expect(screen.queryByLabelText('Planet diameter')).not.toBeInTheDocument();
-      expect(screen.queryByLabelText('Planet input diameter')).toBeInTheDocument();
-      expect(screen.queryByLabelText('Planet population')).not.toBeInTheDocument();
-      expect(screen.queryByLabelText('Planet input population')).toBeInTheDocument();
-      expect(screen.queryByLabelText('Planet orbital period')).not.toBeInTheDocument();
-      expect(screen.queryByLabelText('Planet input orbital period')).toBeInTheDocument();
-      expect(screen.queryByLabelText('Planet rotation period')).not.toBeInTheDocument();
-      expect(screen.queryByLabelText('Planet input rotation period')).toBeInTheDocument();
+    act(() => {
+      const editBtn = screen.getByLabelText(editPlanetBtnName);
+      editBtn.click();
     });
 
-    const viewBtn = screen.getByLabelText(viewModeBtnName);
-    viewBtn.click();
+    expect(screen.queryByLabelText(editPlanetBtnName)).not.toBeInTheDocument();
+    expect(screen.queryByLabelText(viewModeBtnName)).toBeInTheDocument();
 
-    await waitFor(() => {
-      expect(screen.queryByLabelText(editPlanetBtnName)).toBeInTheDocument();
-      expect(screen.queryByLabelText(viewModeBtnName)).not.toBeInTheDocument();
+    // Checks that modificable fields have been changed to input elements
+    expect(screen.queryByLabelText('Planet name')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('Planet input name')).toBeInTheDocument();
+    expect(screen.queryByLabelText('Planet diameter')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('Planet input diameter')).toBeInTheDocument();
+    expect(screen.queryByLabelText('Planet population')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('Planet input population')).toBeInTheDocument();
+    expect(screen.queryByLabelText('Planet orbital period')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('Planet input orbital period')).toBeInTheDocument();
+    expect(screen.queryByLabelText('Planet rotation period')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('Planet input rotation period')).toBeInTheDocument();
+
+    act(() => {
+      const viewBtn = screen.getByLabelText(viewModeBtnName);
+      viewBtn.click();
     });
+
+    expect(screen.queryByLabelText(editPlanetBtnName)).toBeInTheDocument();
+    expect(screen.queryByLabelText(viewModeBtnName)).not.toBeInTheDocument();
   });
 
   it('triggers onEdit event when there are input changes on blur', async () => {
