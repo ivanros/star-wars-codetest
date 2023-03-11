@@ -1,0 +1,24 @@
+name: Build, test and deploy
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Building the Docker image
+      run: docker build -t start-wars-codetest .
+    - name: Installing project dependencies
+      run: npm install
+    - name: Checking code linting
+      run: npm run lint
+    - name: Running jest tests
+      run: npm run test
