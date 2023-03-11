@@ -5,6 +5,8 @@ import { Alert, Typography } from '@material-tailwind/react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+const AUTOHIDE_TIME = 5000;
+
 export function Notification() {
   const notification = useSelector(
     (state: ReturnType<typeof store.getState>) => state.notification,
@@ -16,12 +18,12 @@ export function Notification() {
     if (notification.show) {
       setTimeout(() => {
         dispatch(closeNotification(notification));
-      }, 5000);
+      }, AUTOHIDE_TIME);
     }
   }, [notification, dispatch]);
 
   return (
-    <div className="absolute top-0 w-full flex justify-center z-50">
+    <div className="absolute top-0 w-full flex justify-center z-50 pointer-events-none">
       <div className="flex">
         <Alert
           show={show}
@@ -34,7 +36,7 @@ export function Notification() {
           }
           className={type === 'error' ? 'bg-red-500' : 'bg-green-600'}
         >
-          <Typography className="ml-10">{message}</Typography>
+          <Typography className="ml-10 pointer-events-auto">{message}</Typography>
         </Alert>
       </div>
     </div>
