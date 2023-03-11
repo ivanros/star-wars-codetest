@@ -24,8 +24,23 @@ export default async function handler(
               diameter
               climates
               terrains
+              created
+              population
+              orbitalPeriod
+              rotationPeriod
               residentConnection {
                 totalCount
+                residents {
+                  name
+                  gender
+                  species {
+                    name
+                  }
+                  height
+                  mass
+                  hairColor
+                  skinColor
+                }
               }
             }
           }

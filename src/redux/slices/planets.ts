@@ -27,9 +27,6 @@ export const planetsApi = createApi({
     getPlanets: builder.query<Planet[], void>({
       query: () => '/planets',
     }),
-    getPlanetById: builder.query<Planet, string | undefined>({
-      query: (planetId) => `/planets/${planetId}`,
-    }),
   }),
 });
 
@@ -40,8 +37,8 @@ export const planetsSlice = createSlice({
     createPlanet(state) {
       // Generating a digit random ID for the new planet
       const id = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER).toString();
-      const created = new Date();
-      state.data.unshift({ ...emptyPlanet, id, created });
+      const created = Date.now();
+      state.data.push({ ...emptyPlanet, id, created });
       return state;
     },
     deletePlanet(state, action) {
@@ -68,22 +65,8 @@ export const planetsSlice = createSlice({
         ...state.data.find((oldPlanet: Planet) => oldPlanet.id === newPlanet.id),
       }));
     });
-    builder.addMatcher(planetsApi.endpoints.getPlanetById.matchFulfilled, (state, action) => {
-      // Updating retrieved planet into the planet list store
-      const planetExists = state.data.some((planet: Planet) => planet.id === action.payload.id);
-      if (planetExists) {
-        state.data = state.data.map((planet: Planet) => {
-          if (planet.id === action.payload.id) {
-            return { ...planet, ...action.payload };
-          }
-          return planet;
-        });
-      } else {
-        state.data.push(action.payload);
-      }
-    });
   },
 });
 
-export const { useGetPlanetsQuery, useGetPlanetByIdQuery } = planetsApi;
+export const { useGetPlanetsQuery } = planetsApi;
 export const { createPlanet, deletePlanet, editPlanetProperty } = planetsSlice.actions;
