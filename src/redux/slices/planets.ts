@@ -8,7 +8,7 @@ const initialState = {
 };
 
 const emptyPlanet = {
-  name: 'New Planet',
+  name: '<New Planet>',
   image: '/planet_1.png',
   diameter: 0,
   climates: [],
@@ -40,7 +40,8 @@ export const planetsSlice = createSlice({
     createPlanet(state) {
       // Generating a digit random ID for the new planet
       const id = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER).toString();
-      state.data.unshift({ ...emptyPlanet, id });
+      const created = new Date();
+      state.data.unshift({ ...emptyPlanet, id, created });
       return state;
     },
     deletePlanet(state, action) {

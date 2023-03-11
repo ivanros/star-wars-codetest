@@ -4,28 +4,23 @@ import { Planet } from '@/models/entities/planet';
 import { showNotification } from '@/redux/slices/notifications';
 import { createPlanet, deletePlanet, useGetPlanetsQuery } from '@/redux/slices/planets';
 import { store } from '@/redux/store';
+import { sortPlanetsByProperty } from '@/utils/array-utils';
 import { PlusIcon } from '@heroicons/react/24/solid';
-import { Button, Typography } from '@material-tailwind/react';
+import { Button, Input, Option, Select, Typography } from '@material-tailwind/react';
 import { useRouter } from 'next/router';
-import { ParsedUrlQueryInput } from 'querystring';
-import { createElement, Key, useCallback, useEffect } from 'react';
+import { createElement, Key, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function PlanetsPage() {
+  const [filteredPlanets, setFilteredPlanets] = useState<Planet[]>([]);
+  const [searchBy, setSearchBy] = useState<string>('');
+  const [orderBy, setOrderBy] = useState<string>('name');
   const { isLoading, error } = useGetPlanetsQuery();
-  const planets = useSelector((state: ReturnType<typeof store.getState>) => state.planets.data);
+  const planets: Planet[] = useSelector(
+    (state: ReturnType<typeof store.getState>) => state.planets.data,
+  );
   const router = useRouter();
   const dispatch = useDispatch();
-
-  const goToPlanet = useCallback(
-    (planetId: string, query: ParsedUrlQueryInput | string) => {
-      router.push({
-        pathname: `/planets/${planetId}`,
-        query,
-      });
-    },
-    [router],
-  );
 
   const removePlanetFromList = useCallback(
     (id: string) => {
@@ -35,8 +30,25 @@ export default function PlanetsPage() {
     [dispatch],
   );
 
+  // Filters planets searching by name, climates or terrains
+  const searchByText = useCallback((arrPlanets: Planet[], text: string) => {
+    return arrPlanets.filter(
+      (planet: Planet) =>
+        planet.name.toLowerCase().includes(text.toLowerCase()) ||
+        planet.climates.some((climate) => climate.includes(text.toLowerCase())) ||
+        planet.terrains.some((terrain) => terrain.includes(text.toLowerCase())),
+    );
+  }, []);
+
+  // Filters planets ordering by any property
+  const orderByProperty = useCallback((arrPlanets: Planet[], property: string) => {
+    return sortPlanetsByProperty(arrPlanets, property);
+  }, []);
+
   const addPlanetToList = useCallback(async () => {
     await dispatch(createPlanet());
+    setSearchBy('<New planet>');
+    dispatch(showNotification({ message: `New planet in the universe!`, type: 'success' }));
   }, [dispatch]);
 
   // Shows API error if exists
@@ -46,8 +58,39 @@ export default function PlanetsPage() {
     }
   }, [error, dispatch]);
 
+  useEffect(() => {
+    // Ensures that array sorts and filters at the same moment so filters can be mixed
+    let filteredList = orderByProperty(planets, orderBy);
+    filteredList = searchByText(filteredList, searchBy);
+    setFilteredPlanets(filteredList);
+  }, [planets, orderBy, searchBy, orderByProperty, searchByText]);
+
   return (
-    <div className="flex flex-col justify-center py-40 px-40 h-full w-full">
+    <div className="flex flex-col justify-center py-20 px-40 h-full w-full">
+      <div className="flex justify-center mb-12 gap-14">
+        <div className="w-44">
+          <Input
+            label="Search..."
+            value={searchBy}
+            onChange={(e) => setSearchBy(e.target.value)}
+            className="text-white"
+          />
+        </div>
+        <div className="w-44">
+          <Select
+            label="Order by"
+            value={orderBy}
+            onChange={(option) => setOrderBy(option || '')}
+            className="text-white"
+          >
+            <Option value="name">Name</Option>
+            <Option value="diameter">Diameter</Option>
+            <Option value="climates">Climate</Option>
+            <Option value="terrains">Terrain</Option>
+            <Option value="population">Population</Option>
+          </Select>
+        </div>
+      </div>
       <div className="flex justify-end mb-10">
         <Button
           variant="outlined"
@@ -62,13 +105,13 @@ export default function PlanetsPage() {
       </div>
       {!isLoading ? (
         <>
-          {planets.length > 0 ? (
+          {filteredPlanets.length > 0 ? (
             <div className="flex flex-col gap-28">
-              {planets.map((planet: Planet, index: Key) => (
+              {filteredPlanets.map((planet: Planet, index: Key) => (
                 <PlanetCard
                   key={index}
                   data={planet}
-                  onClick={goToPlanet}
+                  onClick={(id: string) => router.push(`/planets/${id}`)}
                   onDelete={removePlanetFromList}
                 />
               ))}

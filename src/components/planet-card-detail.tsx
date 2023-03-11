@@ -106,7 +106,7 @@ export function PlanetCardDetail(props: PlanetCardDetailProps) {
                   <Input
                     type="number"
                     variant="standard"
-                    defaultValue={diameter.toString()}
+                    defaultValue={diameter?.toString()}
                     onBlur={(e) => onEdit('diameter', +e.target.value)}
                   />
                 </div>
