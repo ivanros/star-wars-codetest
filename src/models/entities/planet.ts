@@ -8,7 +8,7 @@ export type Planet = {
   terrains: String[];
   residentConnection: ResidentConnection;
   image?: string;
-  created?: Date | Number;
+  created?: Date | number;
   population?: Number;
   orbitalPeriod?: Number;
   rotationPeriod?: Number;
